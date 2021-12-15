@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Заказ № </title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{% block title %} Generating QRCode {% endblock %} </title>
+
+</head>
+<body>
+
+{% block content %}
+
+{% endblock %}
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/polyfil.js' %}"></script>
+<script src="{% static 'js/jsPDF.js' %}"></script>
+<script src="{% static 'js/html2canvas.js' %}"></script>
+<script src="{% static 'js/PTSans-Regular-normal.js' %}"></script>
+<script>
+    const {jsPDF} = window.jspdf;
+    const {html2canvas} = window.html2canvas;
+    const bodyEl = document.querySelector('#content');
+
+    function demoFromHTML() {
+
+        var pdf = new jsPDF('p', 'pt', 'letter');
+
+        pdf.html(bodyEl, {
+            callback: function (doc) {
+
+                pdf.addFileToVFS('../ptS.ttf', 'PTSans-Regular'); // addfont
+                pdf.addFont('../ptS.ttf', 'PTSans-Regular', 'normal');
+                pdf.setFont('PTSans-Regular');
+                doc.save();
+            },
+            x: 4,
+            y: 4
+        });
+    }
+
+</script>
+</body>
+</html>
